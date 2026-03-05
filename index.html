@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS ALPHA | Advanced Software Engineering</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #00f2fe;
+            --accent: #7000ff;
+            --bg: #020205;
+        }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: var(--bg); 
+            color: white;
+            overflow-x: hidden;
+        }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Glassmorphism Classes */
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .glass-dark { background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        
+        /* Gradient Animation */
+        .bg-animate {
+            background: linear-gradient(-45deg, #020205, #0a0a1a, #050015, #020205);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        @keyframes gradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        .text-glow { text-shadow: 0 0 20px rgba(0, 242, 254, 0.5); }
+        .btn-gradient { background: linear-gradient(90deg, var(--primary), var(--accent)); transition: 0.4s; }
+        .btn-gradient:hover { filter: brightness(1.2); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(112, 0, 255, 0.3); }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #020205; }
+        ::-webkit-scrollbar-thumb { background: #1a1a2e; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-animate">
+
+    <div id="progress-bar" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-cyan-400 to-purple-600 z-[100] w-0"></div>
+
+    <nav class="fixed w-full z-50 px-6 py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center glass px-8 py-3 rounded-full">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-tr from-cyan-500 to-blue-700 rounded-xl flex items-center justify-center">
+                    <i data-lucide="cpu" class="w-6 h-6 text-white"></i>
+                </div>
+                <span class="text-xl font-800 tracking-tighter mono uppercase">Nexus<span class="text-cyan-400">Alpha</span></span>
+            </div>
+            <div class="hidden lg:flex gap-10 text-xs font-bold uppercase tracking-widest text-gray-400">
+                <a href="#solutions" class="hover:text-cyan-400 transition-colors">Solutions</a>
+                <a href="#infrastructure" class="hover:text-cyan-400 transition-colors">Infrastructure</a>
+                <a href="#lab" class="hover:text-cyan-400 transition-colors">The Lab</a>
+                <a href="#terminal" class="hover:text-cyan-400 transition-colors">Contact</a>
+            </div>
+            <button onclick="scrollToOrder()" class="btn-gradient px-6 py-2 rounded-full text-xs font-bold uppercase">Initialize Project</button>
+        </div>
+    </nav>
+
+    <section class="min-h-screen flex items-center justify-center pt-20 px-6 relative overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/10 blur-[150px] rounded-full"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 blur-[150px] rounded-full"></div>
+        </div>
+
+        <div class="max-w-6xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-8 border-cyan-500/20">
+                <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                </span>
+                <span class="text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-400">System Status: Operational</span>
+            </div>
+            <h1 class="text-6xl md:text-9xl font-800 leading-[0.9] mb-8 tracking-tighter" id="hero-title">
+                WE CODE THE <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600">IMPOSSIBLE.</span>
+            </h1>
+            <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed">
+                Elite-tier custom software, autonomous bots, and high-performance scripts designed for those who refuse to settle for off-the-shelf.
+            </p>
+            <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
+                <button onclick="scrollToOrder()" class="btn-gradient w-full md:w-64 py-5 rounded-2xl font-bold text-lg shadow-2xl">Start Your Build</button>
+                <button class="glass w-full md:w-64 py-5 rounded-2xl font-bold text-lg hover:bg-white/5 transition">Explore Ecosystem</button>
+            </div>
+        </div>
+    </section>
+
+    <div class="py-10 border-y border-white/5 glass-dark overflow-hidden whitespace-nowrap">
+        <div class="flex animate-marquee gap-20 mono text-[10px] uppercase tracking-[0.4em] text-gray-500">
+            <span>Enterprise Software</span> <span>//</span> <span>Blockchain Logic</span> <span>//</span> <span>Neural Networks</span> <span>//</span> <span>Custom APIs</span> <span>//</span> <span>Autonomous Agents</span> <span>//</span> <span>Legacy Refactoring</span> <span>//</span>
+            <span>Enterprise Software</span> <span>//</span> <span>Blockchain Logic</span> <span>//</span> <span>Neural Networks</span> <span>//</span> <span>Custom APIs</span> <span>//</span> <span>Autonomous Agents</span> <span>//</span> <span>Legacy Refactoring</span> <span>//</span>
+        </div>
+    </div>
+
+    <section id="solutions" class="py-32 px-6 max-w-7xl mx-auto">
+        <div class="mb-20">
+            <h2 class="text-4xl font-bold mb-4">Strategic Modules</h2>
+            <div class="h-1 w-20 bg-cyan-500 mb-6"></div>
+            <p class="text-gray-400 max-w-xl leading-relaxed">Our capabilities span the entire digital spectrum, from core infrastructure to experimental user experiences.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="group glass p-10 rounded-[2.5rem] hover:border-cyan-500/50 transition-all duration-500 relative overflow-hidden">
+                <div class="absolute -right-4 -top-4 w-24 h-24 bg-cyan-500/5 rounded-full group-hover:scale-[3] transition-transform duration-700"></div>
+                <i data-lucide="smartphone" class="w-12 h-12 text-cyan-400 mb-8"></i>
+                <h3 class="text-2xl font-bold mb-4">Mobile & Web Apps</h3>
+                <p class="text-gray-500 text-sm leading-relaxed mb-6">Bespoke cross-platform applications built with React Native, Flutter, and Next.js for global scalability.</p>
+                <ul class="text-[11px] mono text-cyan-500/70 space-y-2 uppercase tracking-wider">
+                    <li>+ iOS & Android Native</li>
+                    <li>+ Real-time Cloud Sync</li>
+                    <li>+ Edge Computing</li>
+                </ul>
+            </div>
+
+            <div class="group glass p-10 rounded-[2.5rem] hover:border-purple-500/50 transition-all duration-500">
+                <i data-lucide="bot" class="w-12 h-12 text-purple-400 mb-8"></i>
+                <h3 class="text-2xl font-bold mb-4">Autonomous Bots</h3>
+                <p class="text-gray-500 text-sm leading-relaxed mb-6">Intelligent automation for Discord, Telegram, and Trade engines. 99.9% uptime guaranteed.</p>
+                <ul class="text-[11px] mono text-purple-500/70 space-y-2 uppercase tracking-wider">
+                    <li>+ LLM Integration</li>
+                    <li>+ Web Scraping Pro</li>
+                    <li>+ Workflow Automation</li>
+                </ul>
+            </div>
+
+            <div class="group glass p-10 rounded-[2.5rem] hover:border-blue-500/50 transition-all duration-500">
+                <i data-lucide="terminal" class="w-12 h-12 text-blue-400 mb-8"></i>
+                <h3 class="text-2xl font-bold mb-4">Elite Scripting</h3>
+                <p class="text-gray-500 text-sm leading-relaxed mb-6">Complex Python, Bash, and Go scripts for data migration, security audits, and system hardening.</p>
+                <ul class="text-[11px] mono text-blue-500/70 space-y-2 uppercase tracking-wider">
+                    <li>+ Database Migrations</li>
+                    <li>+ Security Toolkits</li>
+                    <li>+ Task Schedulers</li>
+                </ul>
+            </div>
+
+            <div class="group glass p-10 rounded-[2.5rem] hover:border-emerald-500/50 transition-all duration-500">
+                <i data-lucide="database" class="w-12 h-12 text-emerald-400 mb-8"></i>
+                <h3 class="text-2xl font-bold mb-4">Custom Software</h3>
+                <p class="text-gray-500 text-sm leading-relaxed mb-6">End-to-end enterprise solutions including ERP, CRM, and internal logistics engines.</p>
+                <ul class="text-[11px] mono text-emerald-500/70 space-y-2 uppercase tracking-wider">
+                    <li>+ Microservices Architecture</li>
+                    <li>+ Legacy Overhauls</li>
+                    <li>+ API Design</li>
+                </ul>
+            </div>
+
+            <div id="lab" class="group glass p-10 rounded-[2.5rem] hover:border-red-500/50 transition-all duration-500">
+                <i data-lucide="ghost" class="w-12 h-12 text-red-400 mb-8"></i>
+                <h3 class="text-2xl font-bold mb-4">The Experimental Lab</h3>
+                <p class="text-gray-500 text-sm leading-relaxed mb-6">Niche prank files, educational malware simulations, and experimental digital interactive art.</p>
+                <ul class="text-[11px] mono text-red-500/70 space-y-2 uppercase tracking-wider">
+                    <li>+ harmless pranks</li>
+                    <li>+ security education</li>
+                    <li>+ exotic logic</li>
+                </ul>
+            </div>
+
+            <div class="group glass p-10 rounded-[2.5rem] hover:border-yellow-500/50 transition-all duration-500">
+                <i data-lucide="shield-check" class="w-12 h-12 text-yellow-400 mb-8"></i>
+                <h3 class="text-2xl font-bold mb-4">Security & DevSecOps</h3>
+                <p class="text-gray-500 text-sm leading-relaxed mb-6">Full-scale penetration testing, Dockerization, and AWS/Azure infrastructure management.</p>
+                <ul class="text-[11px] mono text-yellow-500/70 space-y-2 uppercase tracking-wider">
+                    <li>+ Pentesting</li>
+                    <li>+ Kubernetes</li>
+                    <li>+ Zero-Trust Models</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="terminal" class="py-32 px-6">
+        <div class="max-w-5xl mx-auto glass-dark p-12 md:p-20 rounded-[3rem] border-white/10 relative">
+            <div class="absolute -top-10 left-1/2 -translate-x-1/2 glass px-8 py-4 rounded-2xl border-cyan-500/30">
+                <p class="text-cyan-400 mono font-bold text-sm tracking-[0.3em]">INITIALIZE_SEQUENCE</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-16">
+                <div>
+                    <h2 class="text-5xl font-800 mb-8 leading-tight">Ready to <br><span class="gradient-text">Deploy?</span></h2>
+                    <p class="text-gray-400 mb-10 leading-relaxed">
+                        Select your project parameters. Our engineers will review the technical scope and contact you via encrypted channel within 4 business hours.
+                    </p>
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-4 text-gray-300">
+                            <i data-lucide="check-circle" class="text-cyan-400 w-5 h-5"></i>
+                            <span class="text-sm">Confidentiality (NDA) Guaranteed</span>
+                        </div>
+                        <div class="flex items-center gap-4 text-gray-300">
+                            <i data-lucide="check-circle" class="text-cyan-400 w-5 h-5"></i>
+                            <span class="text-sm">Dedicated Project Lead</span>
+                        </div>
+                        <div class="flex items-center gap-4 text-gray-300">
+                            <i data-lucide="check-circle" class="text-cyan-400 w-5 h-5"></i>
+                            <span class="text-sm">Scalable Post-Launch Support</span>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="space-y-6">
+                    <div class="group">
+                        <label class="block text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2 group-focus-within:text-cyan-400 transition">Contact Identity</label>
+                        <input type="text" placeholder="e.g. Satoshi Nakamoto" class="w-full bg-white/5 border border-white/10 rounded-2xl p-5 outline-none focus:border-cyan-500 transition-all text-white">
+                    </div>
+
+                    <div class="group">
+                        <label class="block text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2 group-focus-within:text-cyan-400 transition">Service Core</label>
+                        <select class="w-full bg-black border border-white/10 rounded-2xl p-5 outline-none focus:border-cyan-500 transition-all text-white appearance-none">
+                            <option>Enterprise Software ($10k+)</option>
+                            <option>Mobile/Web Ecosystem ($5k+)</option>
+                            <option>Advanced Automation Bots ($2k+)</option>
+                            <option>Security & Scripts ($1k+)</option>
+                            <option>Experimental Lab Assets</option>
+                        </select>
+                    </div>
+
+                    <div class="group">
+                        <label class="block text-[10px] uppercase tracking-widest text-gray-500 font-bold mb-2 group-focus-within:text-cyan-400 transition">Technical Brief</label>
+                        <textarea rows="5" placeholder="Outline the architecture or functionality required..." class="w-full bg-white/5 border border-white/10 rounded-2xl p-5 outline-none focus:border-cyan-500 transition-all text-white"></textarea>
+                    </div>
+
+                    <button type="button" class="w-full btn-gradient py-6 rounded-2xl font-bold text-lg uppercase tracking-widest flex items-center justify-center gap-3">
+                        Transmit Request <i data-lucide="send" class="w-5 h-5"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-20 px-6 border-t border-white/5 relative">
+        <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-12">
+            <div class="col-span-2">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-8 h-8 bg-cyan-600 rounded flex items-center justify-center">
+                        <i data-lucide="cpu" class="w-4 h-4 text-white"></i>
+                    </div>
+                    <span class="text-xl font-800 tracking-tighter mono uppercase">NexusAlpha</span>
+                </div>
+                <p class="text-gray-500 text-sm max-w-sm mb-8 leading-relaxed">
+                    A global conglomerate of engineers, designers, and visionaries building the infrastructure of the next web.
+                </p>
+                <div class="flex gap-4">
+                    <div class="w-10 h-10 glass rounded-full flex items-center justify-center text-gray-400 hover:text-white cursor-pointer"><i data-lucide="github" class="w-5 h-5"></i></div>
+                    <div class="w-10 h-10 glass rounded-full flex items-center justify-center text-gray-400 hover:text-white cursor-pointer"><i data-lucide="twitter" class="w-5 h-5"></i></div>
+                    <div class="w-10 h-10 glass rounded-full flex items-center justify-center text-gray-400 hover:text-white cursor-pointer"><i data-lucide="linkedin" class="w-5 h-5"></i></div>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-xs font-bold uppercase tracking-widest text-white mb-6">Navigation</h4>
+                <ul class="space-y-4 text-gray-500 text-sm">
+                    <li><a href="#" class="hover:text-cyan-400 transition">Portfolio</a></li>
+                    <li><a href="#" class="hover:text-cyan-400 transition">Case Studies</a></li>
+                    <li><a href="#" class="hover:text-cyan-400 transition">Service Level</a></li>
+                    <li><a href="#" class="hover:text-cyan-400 transition">API Docs</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-xs font-bold uppercase tracking-widest text-white mb-6">System</h4>
+                <ul class="space-y-4 text-gray-500 text-sm">
+                    <li><a href="#" class="hover:text-cyan-400 transition">Legal / NDA</a></li>
+                    <li><a href="#" class="hover:text-cyan-400 transition">Privacy Protocol</a></li>
+                    <li><a href="#" class="hover:text-cyan-400 transition">Security Audits</a></li>
+                    <li><a href="#" class="hover:text-cyan-400 transition">Mainframe Login</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="text-gray-600 text-[10px] uppercase mono">© 2024 NEXUS ALPHA. All Rights Reserved. VER_3.1.5</p>
+            <div class="flex items-center gap-8">
+                <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                    <span class="text-gray-600 text-[10px] uppercase mono">Datacenter: Tokyo-01</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                    <span class="text-gray-600 text-[10px] uppercase mono">Latency: 14ms</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // GSAP Register ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Progress Bar
+        gsap.to("#progress-bar", {
+            width: "100%",
+            ease: "none",
+            scrollTrigger: { scrub: 0.3 }
+        });
+
+        // Hero Animation
+        const tl = gsap.timeline();
+        tl.from("#hero-title", {
+            y: 100,
+            opacity: 0,
+            duration: 1.2,
+            ease: "power4.out"
+        }).from("p", {
+            y: 20,
+            opacity: 0,
+            duration: 0.8
+        }, "-=0.8");
+
+        // Scroll Reveal for Cards
+        gsap.utils.toArray('.glass').forEach(card => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 90%",
+                },
+  
